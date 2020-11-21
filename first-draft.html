@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <title>xslides</title>
+    <style>
+      .slide {
+        box-sizing: border-box;
+        width: 16rem;
+        height: 9rem;
+        margin: .5rem 0;
+        border: 1px solid #eee;
+        border-radius: .5rem;
+        box-shadow: 1px 2px 4px #0002;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .slide-content {
+        position: absolute;
+        font-family: 'Montserrat', sans-serif;
+      }
+      .slide-content.selected { outline: 1px dashed #00f }
+      .slide-content[data-align-x=left][data-align-y=top] { transform: translate(0, 0) }
+      .slide-content[data-align-x=left][data-align-y=middle] { transform: translate(0, -50%) }
+      .slide-content[data-align-x=left][data-align-y=bottom] { transform: translate(0, -100%) }
+      .slide-content[data-align-x=center][data-align-y=top] { transform: translate(-50%, 0) }
+      .slide-content[data-align-x=center][data-align-y=middle] { transform: translate(-50%, -50%) }
+      .slide-content[data-align-x=center][data-align-y=bottom] { transform: translate(-50%, -100%) }
+      .slide-content[data-align-x=right][data-align-y=top] { transform: translate(-100%, 0) }
+      .slide-content[data-align-x=right][data-align-y=middle] { transform: translate(-100%, -50%) }
+      .slide-content[data-align-x=right][data-align-y=bottom] { transform: translate(-100%, -100%) }
+
+      .controls label {
+        display: block;
+        font-family: 'Montserrat', sans-serif;
+      }
+      .controls input {
+        border: none;
+        width: 3rem;
+        font-size: 1em;
+        font-family: inherit;
+        outline: 0;
+        padding: 0;
+        text-align: right;
+      }
+    </style>
+  </head>
+  <body>
+    <div class=slide>
+      <div id=e class=slide-content data-align-x=left data-align-y=top>Hello world</div>
+    </div>
+
+    <div class=controls>
+      <label>x: <input id=px type=number value=0>%</label>
+      <label>y: <input id=py type=number value=0>%</label>
+      <label><select id=ax>
+        <option>left</option>
+        <option>center</option>
+        <option>right</option>
+      </select></label>
+      <label><select id=ay>
+        <option>top</option>
+        <option>middle</option>
+        <option>bottom</option>
+      </select></label>
+    </div>
+
+    <script>
+      let elem = document.getElementById('e');
+      document.getElementById('px').onchange = (e) => { elem.style.left = `${e.target.value}%` };
+      document.getElementById('py').onchange = (e) => { elem.style.top = `${e.target.value}%` };
+      document.getElementById('ax').onchange = (e) => { elem.dataset.alignX = e.target.value };
+      document.getElementById('ay').onchange = (e) => { elem.dataset.alignY = e.target.value };
+    </script>
+  </body>
+</html>
