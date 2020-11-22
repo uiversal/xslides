@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>xslides layout</title>
+    <style>
+    :root {
+      --aspect-ratio: 56.25%;
+    }
+
+    body {
+      margin: 0;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .wrapper {
+      width: 100%;
+      height: 100%;
+      display: flex;
+    }
+
+    .slide {
+      background: #000;
+      color: #fff;
+      margin: 1rem;
+      border-radius: .5rem;
+      box-sizing: border-box;
+      border: 1px solid #fff;
+      box-shadow: 2px 4px 8px #0004;
+      overflow: hidden;
+      position: relative;
+    }
+    .slide::after {
+      content: '';
+      display: block;
+      padding-top: var(--aspect-ratio);
+    }
+    .slide.light {
+      background: #fff;
+      color: #000;
+      border-color: #ddd;
+      box-shadow: 2px 4px 8px #0001;
+    }
+
+    .sidebar-slides {
+      width: 10rem;
+      overflow: auto;
+    }
+
+    .editor {
+      flex-grow: 1;
+    }
+
+    .sidebar-properties {
+      width: 15rem;
+      overflow: auto;
+      background: #eee;
+    }
+    </style>
+    <style>
+      .slide-content {
+        position: absolute;
+        font-family: 'Montserrat', sans-serif;
+      }
+      .slide-content:active { outline: 1px dashed #00f }
+      .slide-content[data-align-x=left][data-align-y=top] { transform: translate(0, 0) }
+      .slide-content[data-align-x=left][data-align-y=middle] { transform: translate(0, -50%) }
+      .slide-content[data-align-x=left][data-align-y=bottom] { transform: translate(0, -100%) }
+      .slide-content[data-align-x=center][data-align-y=top] { transform: translate(-50%, 0) }
+      .slide-content[data-align-x=center][data-align-y=middle] { transform: translate(-50%, -50%) }
+      .slide-content[data-align-x=center][data-align-y=bottom] { transform: translate(-50%, -100%) }
+      .slide-content[data-align-x=right][data-align-y=top] { transform: translate(-100%, 0) }
+      .slide-content[data-align-x=right][data-align-y=middle] { transform: translate(-100%, -50%) }
+      .slide-content[data-align-x=right][data-align-y=bottom] { transform: translate(-100%, -100%) }
+
+      .controls {
+        margin: 1rem;
+      }
+
+      .controls label {
+        display: block;
+        font-family: 'Montserrat', sans-serif;
+      }
+      .controls input {
+        border: none;
+        background: none;
+        width: 3rem;
+        font-size: 1em;
+        font-family: inherit;
+        outline: 0;
+        padding: 0;
+        text-align: right;
+      }
+    </style>
+  </head>
+  <body>
+    <div class=wrapper>
+      <div class=sidebar-slides>
+        <div class=slide></div>
+        <div class=slide></div>
+        <div class=slide></div>
+      </div>
+      <!-- div class=sidebar-elements></div -->
+      <div class=editor>
+        <div class=slide>
+
+
+          <div id=e class=slide-content data-align-x=left data-align-y=top>Hello world</div>
+
+        </div>
+      </div>
+      <div class=sidebar-properties>
+
+
+
+        <div class=controls>
+          <label>x: <input id=px type=number value=0>%</label>
+          <label>y: <input id=py type=number value=0>%</label>
+          <label><select id=ax>
+            <option>left</option>
+            <option>center</option>
+            <option>right</option>
+          </select></label>
+          <label><select id=ay>
+            <option>top</option>
+            <option>middle</option>
+            <option>bottom</option>
+          </select></label>
+        </div>
+
+      </div>
+    </div>
+
+
+    <script>
+      let elem = document.getElementById('e');
+      document.getElementById('px').onchange = (e) => { elem.style.left = `${e.target.value}%` };
+      document.getElementById('py').onchange = (e) => { elem.style.top = `${e.target.value}%` };
+      document.getElementById('ax').onchange = (e) => { elem.dataset.alignX = e.target.value };
+      document.getElementById('ay').onchange = (e) => { elem.dataset.alignY = e.target.value };
+    </script>
+  </body>
+</html>
