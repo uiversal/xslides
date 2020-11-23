@@ -16,20 +16,22 @@
         position: relative;
       }
 
-      .slide-content {
+      .slide-node {
         position: absolute;
         font-family: 'Montserrat', sans-serif;
+        word-wrap: break-word;
+        overflow: hidden;
       }
-      .slide-content.selected { outline: 1px dashed #00f }
-      .slide-content[data-align-x=left][data-align-y=top] { transform: translate(0, 0) }
-      .slide-content[data-align-x=left][data-align-y=middle] { transform: translate(0, -50%) }
-      .slide-content[data-align-x=left][data-align-y=bottom] { transform: translate(0, -100%) }
-      .slide-content[data-align-x=center][data-align-y=top] { transform: translate(-50%, 0) }
-      .slide-content[data-align-x=center][data-align-y=middle] { transform: translate(-50%, -50%) }
-      .slide-content[data-align-x=center][data-align-y=bottom] { transform: translate(-50%, -100%) }
-      .slide-content[data-align-x=right][data-align-y=top] { transform: translate(-100%, 0) }
-      .slide-content[data-align-x=right][data-align-y=middle] { transform: translate(-100%, -50%) }
-      .slide-content[data-align-x=right][data-align-y=bottom] { transform: translate(-100%, -100%) }
+      .slide-node.selected { outline: 1px dashed #00f }
+      .slide-node[data-align-x=left][data-align-y=top] { transform: translate(0, 0) }
+      .slide-node[data-align-x=left][data-align-y=middle] { transform: translate(0, -50%) }
+      .slide-node[data-align-x=left][data-align-y=bottom] { transform: translate(0, -100%) }
+      .slide-node[data-align-x=center][data-align-y=top] { transform: translate(-50%, 0) }
+      .slide-node[data-align-x=center][data-align-y=middle] { transform: translate(-50%, -50%) }
+      .slide-node[data-align-x=center][data-align-y=bottom] { transform: translate(-50%, -100%) }
+      .slide-node[data-align-x=right][data-align-y=top] { transform: translate(-100%, 0) }
+      .slide-node[data-align-x=right][data-align-y=middle] { transform: translate(-100%, -50%) }
+      .slide-node[data-align-x=right][data-align-y=bottom] { transform: translate(-100%, -100%) }
 
       .controls label {
         display: block;
@@ -48,7 +50,7 @@
   </head>
   <body>
     <div class=slide>
-      <div id=e class=slide-content data-align-x=left data-align-y=top>Hello world</div>
+      <div id=e class=slide-node data-align-x=left data-align-y=top>Hello world</div>
     </div>
 
     <div class=controls>
@@ -72,6 +74,83 @@
       document.getElementById('py').onchange = (e) => { elem.style.top = `${e.target.value}%` };
       document.getElementById('ax').onchange = (e) => { elem.dataset.alignX = e.target.value };
       document.getElementById('ay').onchange = (e) => { elem.dataset.alignY = e.target.value };
+    </script>
+
+
+
+
+    <div id=doc></div>
+
+
+    <script>
+      loadDoc ({
+        slides: [
+          {
+            elements: [
+              {
+                type: 'text',
+                name: 'Title',
+                content: 'Hello world',
+                layout: {
+                  x: '50%',
+                  y: '50%',
+                  anchorx: 'center',
+                  anchory: 'middle',
+                  alignx: 'center',
+                  width: '80%'
+                }
+              }
+            ]
+          },
+          {
+            elements: [
+              {
+                type: 'text',
+                content: 'This is slide two',
+                layout: {
+                  x: '1em',
+                  y: '1em',
+                  anchorx: 'left',
+                  anchory: 'top'
+                }
+              }
+            ]
+          }
+        ]
+      });
+
+      function loadDoc (doc) {
+        const translate = {
+          anchorx: {
+            left: '0',
+            center: '-50%',
+            right: '-100%'
+          },
+          anchory: {
+            top: '0',
+            middle: '-50%',
+            bottom: '-100%'
+          }
+        };
+        let container = document.getElementById('doc');
+        for (slide of doc.slides) {
+          let slideElement = document.createElement('DIV');
+          slideElement.classList.add('slide');
+          for (element of slide.elements) {
+            let node = document.createElement('DIV');
+            node.classList.add('slide-node');
+            node.innerHTML = element.content;
+            node.style.left = element.layout.x;
+            node.style.top = element.layout.y;
+            node.style.transform = `translate(${translate.anchorx[element.layout.anchorx]}, ${translate.anchory[element.layout.anchory]})`;
+            node.style.width = element.layout.width;
+            node.style.height = element.layout.height;
+            node.style.textAlign = element.layout.alignx;
+            slideElement.appendChild(node);
+          }
+          container.appendChild(slideElement);
+        }
+      }
     </script>
   </body>
 </html>
