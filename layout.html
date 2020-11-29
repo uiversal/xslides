@@ -56,6 +56,8 @@
       width: 15rem;
       overflow: auto;
       background: #eee;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
     }
     </style>
     <style>
@@ -93,6 +95,129 @@
         text-align: right;
       }
     </style>
+
+    <style>
+
+    .sidebar-section {
+      border-bottom: 1px solid #ddd;
+      padding: .5rem;
+    }
+
+    .sidebar-title {
+      font-weight: 800;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #eee;
+      padding: .5rem;
+      margin: -.5rem;
+    }
+
+    @supports (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) {
+      .sidebar-title {
+        background: #eee2;
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+      }
+    }
+
+    .sidebar-heading {
+      margin: .5rem .2rem;
+      font-size: 14px;
+      font-weight: 500;
+      font-style: italic;
+      color: #777;
+    }
+
+    .sidebar-row {
+      margin: 1rem 0;
+      display: grid;
+      grid-gap: .5rem;
+      gap: .5rem;
+    }
+
+    .sidebar-element {
+      background: #fafafa;
+      border-radius: 6px;
+      box-shadow: 1px 2px 4px #0001;
+      grid-row: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar-element .input {
+      box-sizing: border-box;
+      width: 100%;
+      margin: 0;
+      padding: .5rem;
+      appearance: none;
+      border: none;
+      font-size: inherit;
+      font-family: inherit;
+      font-weight: inherit;
+      background: transparent;
+      outline: 0;
+    }
+
+    .sidebar-element.type-input .spinner {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+    }
+
+    .sidebar-element.type-input .spinner-button, .sidebar-element.type-button .input {
+      cursor: default;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color.2s;
+      user-select: none;
+    }
+    .sidebar-element.type-select .input { transition: background-color .2s }
+
+    .sidebar-element.type-input .spinner-button {
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+    }
+
+    .sidebar-element.type-segmented {
+      display: flex;
+      padding: 0;
+    }
+
+    .sidebar-element.type-segmented .input {
+      position: absolute;
+      left: -9999px;
+    }
+
+    .sidebar-element.type-segmented .label {
+      flex: 1 1 0;
+      padding: .5rem;
+      text-align: center;
+      user-select: none;
+      transition: .2s;
+    }
+
+    .sidebar-element.type-input .spinner-button:hover, .sidebar-element.type-button .input:hover, .sidebar-element.type-select .input:hover, .sidebar-element.type-segmented .label:hover { background: #eee }
+    .sidebar-element.type-input .spinner-button:active, .sidebar-element.type-button .input:active, .sidebar-element.type-select .input:active, .sidebar-element.type-segmented .label:active { background: #ddd }
+    .sidebar-element.type-segmented .input:checked + .label {
+      background: #c37;
+      color: #fff;
+    }
+
+    .sidebar-element.utf8icon .label, .sidebar-element.utf8icon .input {
+      box-sizing: content-box;
+      width: auto;
+      height: 1.2rem;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    </style>
   </head>
   <body>
     <div class=wrapper>
@@ -114,7 +239,143 @@
 
 
 
-        <div class=controls>
+        <div class=sidebar-section>
+          <div class=sidebar-title>Text</div>
+          <div class=sidebar-row>
+            <div class="sidebar-element type-input">
+              <input class=input type=text>
+              <div class=spinner>
+                <div class=spinner-button>+</div>
+                <div class=spinner-button>–</div>
+              </div>
+            </div>
+          </div>
+          <div class=sidebar-row>
+            <div class="sidebar-element type-select">
+              <select class=input>
+                <option>Metropolis</option>
+                <option selected>Montserrat</option>
+                <option>Quicksand</option>
+                <option>Raleway</option>
+                <option>Sansation</option>
+              </select>
+            </div>
+          </div>
+          <div class=sidebar-row>
+            <div class="sidebar-element type-segmented">
+              <input class=input type=checkbox id=sidebar-bold><label class=label for=sidebar-bold>B</label>
+              <input class=input type=checkbox id=sidebar-italics><label class=label for=sidebar-italics>I</label>
+              <input class=input type=checkbox id=sidebar-underline><label class=label for=sidebar-underline>U</label>
+              <input class=input type=checkbox id=sidebar-strikethrough><label class=label for=sidebar-strikethrough>S</label>
+            </div>
+          </div>
+        </div>
+
+        <div class=sidebar-section>
+          <div class=sidebar-title>Layout</div>
+          <div class=sidebar-heading>Align</div>
+          <div class=sidebar-row>
+            <div class="sidebar-element type-segmented utf8icon">
+              <input class=input type=radio name=sidebar-alignx id=sidebar-alignl><label class=label for=sidebar-alignl>→</label>
+              <input class=input type=radio name=sidebar-alignx id=sidebar-alignc><label class=label for=sidebar-alignc>↔</label>
+              <input class=input type=radio name=sidebar-alignx id=sidebar-alignr><label class=label for=sidebar-alignr>←</label>
+            </div>
+          </div>
+          <div class=sidebar-row>
+            <div class="sidebar-element type-segmented utf8icon">
+              <input class=input type=radio name=sidebar-aligny id=sidebar-alignt><label class=label for=sidebar-alignt>↓</label>
+              <input class=input type=radio name=sidebar-aligny id=sidebar-alignm><label class=label for=sidebar-alignm>↕</label>
+              <input class=input type=radio name=sidebar-aligny id=sidebar-alignb><label class=label for=sidebar-alignb>↑</label>
+            </div>
+          </div>
+        </div>
+
+        <div class=sidebar-section>
+          <div class=sidebar-title>Dimensions</div>
+          <div class=sidebar-heading>Position</div>
+          <div class=sidebar-row>
+            <div class="sidebar-element type-input">
+              <input class=input type=text>
+              <div class=spinner>
+                <div class=spinner-button>+</div>
+                <div class=spinner-button>–</div>
+              </div>
+            </div>
+            <div class="sidebar-element type-input">
+              <input class=input type=text>
+              <div class=spinner>
+                <div class=spinner-button>+</div>
+                <div class=spinner-button>–</div>
+              </div>
+            </div>
+          </div>
+          <div class=sidebar-heading>Anchor</div>
+          <div class=sidebar-row>
+            <div class="sidebar-element type-segmented utf8icon">
+              <input class=input type=radio name=sidebar-anchorx id=sidebar-anchorl><label class=label for=sidebar-anchorl>→</label>
+              <input class=input type=radio name=sidebar-anchorx id=sidebar-anchorc><label class=label for=sidebar-anchorc>↔</label>
+              <input class=input type=radio name=sidebar-anchorx id=sidebar-anchorr><label class=label for=sidebar-anchorr>←</label>
+            </div>
+          </div>
+          <div class=sidebar-row>
+            <div class="sidebar-element type-segmented utf8icon">
+              <input class=input type=radio name=sidebar-anchory id=sidebar-anchort><label class=label for=sidebar-anchort>↓</label>
+              <input class=input type=radio name=sidebar-anchory id=sidebar-anchorm><label class=label for=sidebar-anchorm>↕</label>
+              <input class=input type=radio name=sidebar-anchory id=sidebar-anchorb><label class=label for=sidebar-anchorb>↑</label>
+            </div>
+          </div>
+          <div class=sidebar-heading>Size</div>
+          <div class=sidebar-row>
+            <div class="sidebar-element type-input">
+              <input class=input type=text>
+              <div class=spinner>
+                <div class=spinner-button>+</div>
+                <div class=spinner-button>–</div>
+              </div>
+            </div>
+            <div class="sidebar-element type-input">
+              <input class=input type=text>
+              <div class=spinner>
+                <div class=spinner-button>+</div>
+                <div class=spinner-button>–</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class=sidebar-section>
+          <div class=sidebar-title>Transform</div>
+          <div class=sidebar-heading>Rotate</div>
+          <div class=sidebar-row>
+            <div class="sidebar-element type-button utf8icon">
+              <div class=input>↺</div>
+            </div>
+            <div class="sidebar-element type-button utf8icon">
+              <div class=input>↻</div>
+            </div>
+          </div>
+          <div class=sidebar-heading>Scale</div>
+          <div class=sidebar-row>
+            <div class="sidebar-element type-input">
+              <input class=input type=text>
+              <div class=spinner>
+                <div class=spinner-button>+</div>
+                <div class=spinner-button>–</div>
+              </div>
+            </div>
+            <div class="sidebar-element type-input">
+              <input class=input type=text>
+              <div class=spinner>
+                <div class=spinner-button>+</div>
+                <div class=spinner-button>–</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!--div class=controls>
           <label>x: <input id=px type=number value=0>%</label>
           <label>y: <input id=py type=number value=0>%</label>
           <label><select id=ax>
@@ -127,7 +388,7 @@
             <option>middle</option>
             <option>bottom</option>
           </select></label>
-        </div>
+        </div-->
 
       </div>
     </div>
